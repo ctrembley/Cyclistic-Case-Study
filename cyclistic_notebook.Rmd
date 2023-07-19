@@ -1,0 +1,85 @@
+---
+title: "Cyclistic Case Study"
+output: html_document
+date: "2023-07-18"
+author: "Connor Trembley"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Executive Summary
+
+How do annual members and casual riders use Cyclistic bikes differently?
+
+Based on the data analyzed, casual riders' use the bikes for about 2.2x as long as annual members. Additionally, annual members trend towards using the bikes more heavily during the week whereas we see an influx of casual riders on the weekend. These findings might suggest that members use the bikes for commuting to work whereas casual members use the bikes longer and for leisure.
+
+Based on the data analyzed, here are several recommendations for Cyclistic:
+
+1.  Provide discounts on duration for members since casual riders prefer longer rides.
+2.  Provide weekend perks for members since casual riders prefer riding on the weekend. Example: access to city exploration guides or brewer-tour routes or a weekly bicycle scavenger hunt.
+3.  Give members access to unique bicycles geared towards comfort since casual riders prefer longer rides. Example: two-seated bicycle or recumbent.
+
+## 1. Prepare
+
+-   [Data source](https://divvy-tripdata.s3.amazonaws.com/index.html)
+-   Data description: first-party data collected by Cyclistic aggregated into monthly reports
+-   Data organization: Data organized by month in csv file format
+-   License: license provided [here](https://www.divvybikes.com/data-license-agreement)
+-   Privacy & security: personally identifiable information not used to connect individuals to any of the data
+
+Issues with bias or credibility:
+
+-   data updates every month so can become inaccurate
+-   data from one source, could verify trends by looking at other companies data
+
+## 2. Process
+
+All data processed with R using RStudio.
+
+Steps to ensure data integrity:
+
+-   Verify row and column counts before and after merging of csv files
+-   Check for duplicates and remove if necessary
+-   Manipulate data in RStudio only, do not touch raw data
+
+Cleaning process:
+
+-   Rename 'member_casual' column to 'user_type' column for readability
+-   Validate date entry for 'starting time'started_at' and ensure it's within last 12 months (07/2022 - 06/2023)
+-   Check for entries in 'user_type' column and ensure 'member' and 'casual' are only entries
+-   Check for entries in 'rideable_type' column and ensure 'classic_bike', 'docked_bike', and 'electric_bike' are only entries
+-   Identify duplicates in 'ride_id' column (none found)
+-   Add new column 'ride_duration' ('ended_at' - 'started_at')
+-   Add new column 'travel_day' ('started_at' converted to weekday)
+-   Add new column 'travel_month' ('started_at' converted to month)
+-   Identify 'ride_duration' values \<=0 and remove them (several found)
+-   Identify 'ride_duration' on the top end, without knowing why some of these rides are so long none were removed
+-   Remove columns related to latitude, longitude, and stations
+-   Drop 'n/a' values
+
+## 3. Analyze
+
+Overall the ride duration for casual riders was about 2.2x times that of annual members. It's viewed in a monthly format here to show both groups tend to ride more during the warm months.
+
+```{r plot_one, echo=FALSE}
+knitr::include_graphics('/Users/Konnor/Documents/Code/course_google_data/captstone_case_study/raw_data/plot_one.png')
+```
+
+Annual members tended to ride more during the week while casual riders rode more on weekends.
+
+```{r plot_two, echo=FALSE}
+knitr::include_graphics('/Users/Konnor/Documents/Code/course_google_data/captstone_case_study/raw_data/plot_two.png')
+```
+
+Ride duration was had some surprisingly long results, more research should be done into this to determine potential reasons for longer trips.
+
+```{r plot_three, echo=FALSE}
+knitr::include_graphics('/Users/Konnor/Documents/Code/course_google_data/captstone_case_study/raw_data/plot_three.png')
+```
+
+## 4. Conclusion
+
+Further research is needed to determine why there are certain trends in the data, such as why casual riders are going on such long rides.
+
